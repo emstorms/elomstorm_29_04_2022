@@ -1,18 +1,107 @@
 header{
     display:flex;   
+    // justify-content: space-between;
     background-color: var(--gray);
+    flex-wrap: wrap;
 
     .logo{
         border:1px solid white;
         display:flex;
         justify-content: center;
         align-items: center;
+        flex-basis:20%;
     }
 
     .header_nav{
+        // background-color: crimson;
         display:flex;
-        justify-content: center;
+        // justify-content: center;
         align-items: center;
+        flex-grow: 1;
     }
+
+    //SET HORIZONTAL MENU items
+    
+}
+.browse_content{
+    // background-color: cadetblue;
+    display:flex;
+    justify-content: space-around;
+    // align-items: center;
+    // flex-basis:50%;
+    // flex-grow:1;
+    
+    //li Item Text and border
+    li{
+        display:flex;
+        background-color: var(--beige);
+        list-style: none;
+        // padding:10px;
+        border-radius: 3px;
+        margin:7px;
+        
+
+       
+
+        a{
+            display:flex;
+            justify-content: space-around;
+            align-items: center;
+            color:black;
+            text-decoration: none;
+            padding:10px;
+
+            &:hover{
+                background-color:white;
+                
+            }
+
+            span{
+                margin-left:10px;
+            }
+        }
+    }
+
+
 }
 
+.account_mng{
+    // background-color: rgb(204, 213, 30);
+    display:flex;
+    justify-content: space-around;
+    // align-items: center;
+    // flex-basis:50%;
+    flex-grow:2;
+
+    //li Item Text and border
+    li{
+        display:flex;
+        background-color: var(--beige);
+        list-style: none;
+        // padding:10px;
+        border-radius: 3px;
+        // margin:7px;
+
+       
+
+        a{
+            
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+            // background-color: coral;
+            color:black;
+            text-decoration: none;
+            padding:10px;
+
+            &:hover{
+                background-color:white;
+                
+            }
+
+            span{
+                margin-left:10px;
+            }
+        }
+    }
+}

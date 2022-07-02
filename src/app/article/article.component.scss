@@ -1,0 +1,33 @@
+article{
+    margin-top: 20px;
+    margin-bottom: 20px;;
+    border:1px solid black;
+    display:flex;
+    flex-flow:row wrap;
+
+    .profil{
+        padding:5px;
+        border:1px solid black;
+        img{
+            max-width:200px;
+        }
+    }
+
+    //MESSAGE CONTENT
+
+    .message{
+        display:flex;
+        flex-direction: column;
+        padding:5px;
+        border:1px solid coral;
+        flex-grow:1;
+
+        //title
+        .title{
+            background-color: var(--beige);
+        }
+        .date{
+            background-color: var(--gray);
+        }
+    }
+}
