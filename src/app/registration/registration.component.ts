@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl , FormGroup,FormArray, NgForm ,ReactiveFormsModule } from '@angular/forms';
+import { userModel } from 'models/user.model';
+
+    //Services
+import { AuthService } from 'services/auth.service';
 
 
 @Component({
@@ -21,7 +25,8 @@ export class RegistrationComponent implements OnInit {
 
   //Constructor
 
-  constructor() { }
+  constructor(private auth : AuthService) { }
+  
 
 
   //Methods
@@ -39,10 +44,21 @@ export class RegistrationComponent implements OnInit {
       });
   }
 
-  //Submission
-  onSubmit(){
-    console.log("ON SUBMIT BUTTOn CLICK, Calling service Submission");
+                                         //Submission
+  onRegister(){
+    console.log("ON SUBMIT REgister BUTTOn CLICK, Calling service Submission");
     console.log(this.registration_form.value);
+    const formValue = this.registration_form.value;
+    
+    
+    // this.auth.registrer({formValue} as userModel)
+    this.auth.registrer(formValue)
+      .subscribe(member => {
+        console.log("°° IN SUBSCRIPTION, show subs cont");
+        console.log(member);
+
+      });
+    
   }
 
 }

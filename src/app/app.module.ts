@@ -10,6 +10,10 @@ import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { ArticleFormComponent } from './article-form/article-form.component';
 import { MemberAreaComponent } from './member-area/member-area.component';
+import { LogoutPageComponent } from './logout-page/logout-page.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -19,13 +23,16 @@ import { MemberAreaComponent } from './member-area/member-area.component';
     RegistrationComponent,
     LoginComponent,
     ArticleFormComponent,
-    MemberAreaComponent
+    MemberAreaComponent,
+    LogoutPageComponent,
+    WelcomePageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
 
   ],
   providers: [],
