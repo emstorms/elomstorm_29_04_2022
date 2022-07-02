@@ -39,11 +39,34 @@ article{
             //title
             .title{
                 background-color: var(--beige);
+                padding: 5px;
             }
             .date{
                 background-color: var(--gray);
                 color:white;
                 text-align: right;
+                padding: 5px;
+            }
+
+            .message_content{
+                display:flex;
+                flex-direction: column;
+                .message_img{
+                    text-align: center;
+                    align-self: center;
+                    width:40%;
+                    max-height: 400px;
+                    margin:10px;
+                    border:2px solid green;
+                    border-radius: 9px;
+                    img{
+                        height:100%;
+                        width: 100%;
+                        // max-width:500px;
+                        object-fit:cover;
+                        border-radius: 9px;
+                    }
+                }
             }
         }
     }

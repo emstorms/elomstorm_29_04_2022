@@ -1,0 +1,27 @@
+<h1>Formulaire d'inscription</h1>
+<br/>
+<hr>
+<p>Veuillez vous inscrire et rejoignez vos collègue pour un meilleure ambiance de travail</p>
+<form [formGroup]="registration_form" (ngSubmit)="onSubmit()">
+                <!-- //1st name and Last Name -->
+    <label for="last_name">Nom </label>
+    <input type="text" name="last_name"required formControlName="last_name">
+    <label for="first_name">Prénom </label>
+    <input type="text" name ="first_name" required formControlName="first_name">
+                <!-- //intitulé du poste occupé -->
+    <label for="pseudo">Pseudo </label>
+    <input type="text" name="pseudo" required formControlName="pseudo">
+
+                <!-- //Email and & Password -->
+    <label for="email">email</label>
+    <input type="email" name="email" id="email" required formControlName="email">
+    <label for="password">Mot de passe</label>
+    <input type="password" name="" id="password" required formControlName="password"> 
+    <label for="password_bis">Répéter le Mot de passe</label>
+    <input type="password" name="" id="password_bis" required formControlName="password_bis"> 
+                
+
+    <!-- Submit Button -->
+    <input type="submit" value="Inscription">
+
+</form>

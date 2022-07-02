@@ -1,0 +1,73 @@
+
+body{
+    border:1px solid green;
+}
+
+.account{
+    min-height:550px;
+    display:flex;
+
+}
+.profil_param{
+    border:1px solid black;
+    min-height:500px;;
+    flex-basis: 500px;
+    padding:20px;
+    display:flex;
+    flex-flow:column wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.profil{
+    display:flex;
+    flex-flow:column wrap;
+    justify-content: space-around;
+    align-items: center;
+    img{
+        height:150px;
+        width:150px;
+        border:5px solid var(--beige);
+        border-radius:50%;
+    }
+    .nom{
+        color:black;
+    }
+    .pseudo{
+        color:blue;
+        font-style: italic;
+    }
+
+}
+
+.param{
+    border:2px inset coral;
+    padding:10px;
+    li{
+        list-style:none;
+        margin-top:20px;
+        &:first-child{
+            font-size:1.5rem;
+        }
+    }
+}
+
+.messages{
+    border:1px solid green;
+    width: 60%;
+    height:100%;
+
+    article{
+        width:100%;
+        min-height:80px;
+        border:1px solid red;
+        h5{
+            background-color: var(--red);
+            margin-bottom:5px;
+        }
+    }
+    h3{
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}

@@ -1,0 +1,18 @@
+<h1>Connectez vous</h1>
+<br/>
+<hr>
+
+<form [formGroup]="login_form" (ngSubmit)="onSubmit()">
+                <!-- //Email and & Password -->
+    <label for="email">email</label>
+    <input type="email" name="email" id="email" formControlName="email" required>
+    <label for="password">Mot de passe</label>
+    <input type="password" name="" id="password" formControlName="password" required>
+                
+
+    <!-- Submit Button -->
+    <!-- <input   type="submit" value="Connexion"> -->
+    <input type="submit" value="Connexion">
+  
+
+</form>

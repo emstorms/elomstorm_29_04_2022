@@ -1,0 +1,39 @@
+<!-- <p class="grant_message" *ngIf="!isLogged">Vous devez vous connecter pour voir la liste des articles(UNcomment *ngifBelow)</p>
+<div class="write_form" *ngIf="isLogged" > -->
+    <p class="grant_message" >Vous devez vous connecter pour voir la liste des articles(UNcomment *ngifBelow)</p>
+    <div class="write_form"  >
+        <form [formGroup]="write_form_g" (ngSubmit)="onPoster()">    
+           
+                <div class="cont">
+                    <!--**************************** 
+                        //Incude file and Texts Zone 
+                        ****************************-->
+                    <label for="titre">
+                        <span>Titre</span>
+                     <!-- <input type="text" [formControl]="message_form"> -->
+                        <input type="text" formControlName="title">
+                    </label>
+               
+                     <label for="message_content">
+                      <span>Message</span>
+                     <textarea formControlName="message_content" ></textarea>
+                 
+                    </label>
+                    
+                    <input type="file" name="image" id="" formControlName="image_url">
+    
+                    <input type="submit" value="POSTER" >
+                 
+                </div>
+                
+        </form>
+        <!-- <form class="cont" *ngIf="is_annonce; else !is_annonce">
+        <label for="is_annonce" >
+            <input type="checkbox" name="" id="">
+        </label> -->
+    
+        <!-- </form> -->
+       
+    
+    </div>
+    
