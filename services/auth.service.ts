@@ -9,6 +9,7 @@ import { Login_model, userInfo, userModel } from 'models/user.model';
 import { catchError,map,tap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { InterfaceMessageService } from 'src/app/interface-message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +32,9 @@ export class AuthService {
   private idRole : Number = 0;
   private pseudo !:string;
   public userId2 !:Number;
-  public s_islog !:boolean;
+  private storg_islog !:boolean;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, app_message : InterfaceMessageService) { }
 
 
   //methods
@@ -102,6 +103,12 @@ export class AuthService {
     // return this.http.get<userInfo[]>(user_info_url,{observe:'response'});
   }                
 
+
+  checkIsLogged2(){
+    const boolog = localStorage.getItem("TOKEN");
+    // console.log(boolog);
+    return boolog ? true : false;
+  }
 
   getToken(): String {
     return this.token;
@@ -174,5 +181,25 @@ export class AuthService {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
+
+
+                                    //Manage ACCOUNT
+
+   deleteUser(token:any, areaId:Number): Observable<userModel>{
+    console.log("++++++++DELETING ACCOUNT");
+    console.log(token);
+    console.log("User Id");
+    
+    const request_url =`http://localhost:3000/api/auth/user/${areaId}`;
+
+    return this.http.delete<userModel>(request_url).pipe(
+      tap(cont => {
+        console.log("In DELETE TAP");
+        console.log(cont);
+      })
+    )
+   
+    
+   }
 
 }

@@ -14,6 +14,7 @@ import { LogoutPageComponent } from './logout-page/logout-page.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorProvider } from 'interceptors';
+import { AppMessageComponent } from './app-message/app-message.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { HttpInterceptorProvider } from 'interceptors';
     ArticleFormComponent,
     MemberAreaComponent,
     LogoutPageComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
+    AppMessageComponent
   ],
   imports: [
     BrowserModule,

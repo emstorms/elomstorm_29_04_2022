@@ -14,6 +14,10 @@ export class MemberAreaComponent implements OnInit {
 
   constructor(private auth : AuthService) { }
 
+  //App message
+  // app_message !:string;
+  app_message !:string;
+
   //Members
   nom!:string;
   prenom!:string;
@@ -22,37 +26,65 @@ export class MemberAreaComponent implements OnInit {
 
   myInfo !: userInfo;
   usersInfo$ !: Observable<userInfo[]>
-  // nom:string ="LENOM";
-  // prenom:string="Prenom";
-  // pseudo:string="pseudoman";
-  // email:string="email@email";
-
   role_name !: string;
 
-  @Output() isLog !: boolean;
+  // @Output() isLog !: boolean;
+  isLog !: boolean;
   @Output() isLog_f = new EventEmitter<boolean>();
 
   ngOnInit(): void {
-    console.log("CONF LOGIN");
+    // console.log("CONF LOGIN");
+     console.log("++++CHECK LOG WITH localstorage");
+    // console.log(this.auth.checkIsLogged2());
+    this.isLog = this.auth.checkIsLogged2();
     this.getMyInfo();
-    console.log(this.auth.checkIsLogged());
-    // if(Number(this.myInfo.id_role) == 1){
-    //   this.role_name = "Utilisateur Normal";
-    //   //user => 1
-    //   //moderator => 500
-    //   //admin => 2000
-    // }else if(Number(this.myInfo.id_role) == 500){
-    //   this.role_name = "Vous êtes un modérateur";
-    // }else if(Number(this.myInfo.id_role) == 2000){
-    //   this.role_name = "Vous êtes un Admin";
-    // }
+    // console.log(this.auth.checkIsLogged());
+    // console.log("IS logged");
+    // console.log(this.auth.s_islog);
+
+   
+    
+  }
+                   //Managing account
+  deleteUser(){
+    console.log("DELETE ACCOUNT");
+    // const token = this.auth.getToken() ? this.auth.getToken : localStorage.getItem('TOKEN');
+    const token =  localStorage.getItem('TOKEN');
+    // console.log(token);
+    console.log("++++++++++++Area Id");
+    console.log(this.myInfo.id);
+    if(typeof token !=='string'){
+      // this.auth.deleteUser(token, this.myInfo.id);
+      // this.auth.deleteUser(token, this.myInfo.id);
+      // window.alert("Veuillez vous connecter avant poursuivre");
+      console.log(token);
+      //Emit message
+      this.app_message = "Veuillez vous connecter avant poursuivre";
+      return;
+    } 
+                  // CONFIRM BEFORE DELETE
+/*
+
+     const confirmation = prompt(`Tapez "Oui" si Vous souhaitez vraiment supprimer le compte de >${this.myInfo.pseudo}<`);
+     const ouir = confirmation?.toLowerCase();
+     if(ouir !== "oui" ){
+        window.alert("---Abandon de la suppression du compte--");
+        return;
+     }
+
+     
+     window.alert("demande de suppression en cours");
+
+   */
 
 
-    console.log("IS logged");
-    console.log(this.auth.s_islog);
-
+     this.auth.deleteUser(token, this.myInfo.id).subscribe();
 
   }
+
+
+
+
   isConnected(y_n :boolean){
     this.isLog_f.emit(y_n);
   }
@@ -60,15 +92,15 @@ export class MemberAreaComponent implements OnInit {
   getMyInfo(){
      this.usersInfo$ = this.auth.getUsers().pipe(
       tap(cont => {
-        console.log("ANSWER VALUES");
-        console.log(cont);
+        // console.log("ANSWER VALUES");
+        // console.log(cont);
        
       }))
 
       this.usersInfo$.subscribe(res => {
        
         if(localStorage.getItem('id')){
-          console.log(typeof localStorage.getItem('id'));
+          // console.log(typeof localStorage.getItem('id'));
           // const t = Number(localStorage.getItem('id'))
            const info = res.filter(user => user.id == Number(localStorage.getItem('id'))) ;
            console.log("info is");
@@ -85,7 +117,8 @@ export class MemberAreaComponent implements OnInit {
             this.role_name = "Vous êtes un Admin";
           }
 
-          this.isLog = this.auth.checkIsLogged();
+          // this.isLog = this.auth.checkIsLogged();
+          this.isLog = this.auth.checkIsLogged2();
           console.log(this.isLog);
         }      
         
