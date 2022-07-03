@@ -13,6 +13,7 @@ import { MemberAreaComponent } from './member-area/member-area.component';
 import { LogoutPageComponent } from './logout-page/logout-page.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpInterceptorProvider } from 'interceptors';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
 
   ],
-  providers: [],
+  providers: [HttpInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

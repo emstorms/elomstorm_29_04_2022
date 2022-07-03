@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup ,FormControl } from '@angular/forms';
+import { AuthService } from 'services/auth.service';
 
 @Component({
   selector: 'app-article-form',
@@ -21,7 +22,7 @@ export class ArticleFormComponent implements OnInit {
   isLogged :boolean = false;
 
 
-  constructor() { }
+  constructor(private auth : AuthService) { }
 
 
   //Methods 
@@ -34,11 +35,13 @@ export class ArticleFormComponent implements OnInit {
       image_alt : new FormControl(''),
       annonce_check : new FormControl('')
     })
+    console.log(this.auth.checkIsLogged());
 
   }
 
   onPoster(){
     console.log("++POSTER CLICKED++");
+    console.log(this.auth.checkIsLogged());
   }
 
 

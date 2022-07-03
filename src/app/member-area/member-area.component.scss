@@ -31,7 +31,13 @@ body{
         border-radius:50%;
     }
     .nom{
+        margin-top:10px;
         color:black;
+        text-transform: uppercase;
+        font-weight: bold;
+        span{
+            text-transform: capitalize;
+        }
     }
     .pseudo{
         color:blue;
