@@ -6,12 +6,12 @@ router = express.Router();
 
 
 //ACOUNT ROUTER
-/*
+
 router.post('/new_message',messageController.create_new_article);
 router.get('/messages',messageController.showArticles);
 router.delete('/messages/:id',messageController.deleteMessage);
 
-*/
+
 // router.post('/login',authController.login);
 
 

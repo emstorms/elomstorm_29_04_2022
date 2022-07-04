@@ -10,16 +10,30 @@ const connection = require('../my_connection/db_connection');
 exports.create_new_article = (req,res,next) =>{
     console.log("+++++++IN BACKEND MESSAGE CONTROLLER");
     console.log(req.body);
-    console.log(req.body.dateCreated);
+    // console.log(req);
     
     // const request_message ="INSERT INTO article_message(text_title,text_content,owner_id,owner_name)";
-    const request_text =`INSERT INTO article_message (text_title,text_content,article_owner_id,ownerName,ownerPseudo,imgUrl,imgAlt)
+/*
+    const request_text =`INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,imgAlt)
 
-    VALUES("${req.body.text_title}","${req.body.text_content}",${req.body.article_owner_id},"name",${req.body.ownerPseudo},"${req.body.imgUrl}","${req.body.imgAlt}");`;
-    
+    VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",);`;
+    */
+/*
+    const request_text =`START Transaction;
+SET @my_var = (SELECT pseudo FROM USer_ Where id = 14);
+INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,imgAlt,pseudo)
+  VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",@my_var);
+COMMIT;`;
+*/
+const request_text =`INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,imgAlt,ownerPseudo)
+
+VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",(SELECT pseudo FROM user_ WHERE id = ${req.body.article_owner_id}));`;
+
 
     console.log(request_text);
     // ,"${LOAD_FILE('req.body.imgUrl}')}"
+
+
     connection.query(request_text,(err,resultat) => {
         if(err){
             console.log(err);
@@ -27,10 +41,12 @@ exports.create_new_article = (req,res,next) =>{
             return;
         }
         
-          console.log("RESULTAT nb_exists and iscorrect_pass");
+          console.log("MESSAGE SENT");
           console.log(resultat);
     
     })
+
+   
 
     res.status(200).json({message:"NEW ARTICLE CONTROLLER"});
 }
