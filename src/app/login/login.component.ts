@@ -64,6 +64,8 @@ export class LoginComponent implements OnInit {
         console.log(JSON.stringify(localStorage));
              localStorage.setItem('TOKEN', `${response.body?.token}`);
              localStorage.setItem('id', `${response.body?.userId}`);
+             localStorage.setItem('role',`${response.body?.id_role}` )
+             localStorage.setItem('pseudo',`${response.body?.pseudo}` )
              const theToken = localStorage.getItem('TOKEN');
              const theId = localStorage.getItem('id');
              if(theToken){

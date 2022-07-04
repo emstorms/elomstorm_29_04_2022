@@ -7,6 +7,8 @@ import { LogoutPageComponent } from './logout-page/logout-page.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { MemberAreaComponent } from './member-area/member-area.component';
 import { AuthGuard } from 'services/auth-guard.service';
+import { ListArticleComponent } from './list-article/list-article.component';
+import { ArticleComponent } from './article/article.component';
 
 
 const routes: Routes = [
@@ -17,6 +19,8 @@ const routes: Routes = [
   {path:'logout_page', component : LogoutPageComponent},
   {path:'welcome', component : WelcomePageComponent},
   {path: 'member_area', component: MemberAreaComponent},
+  {path: 'articles', component : ListArticleComponent},
+  {path : 'articles/:id', component : ArticleComponent},
   //When empty route Or bad input send redirect 
   {path :'',redirectTo:'welcome',pathMatch:'full'},
   // {path :'**',redirectTo:'welcome',pathMatch:'full'}

@@ -1,0 +1,65 @@
+<form [formGroup]="message_form_group">
+    <div class="creation_content">
+        <!--**************************** 
+            //Incude file and Texts Zone 
+            ****************************-->
+        <label for="titre">
+            <span>Titre</span>
+         <!-- <input type="text" [formControl]="message_form"> -->
+            <input type="text" formControlName="title">
+        </label>
+   
+         <label for="message_content">
+          <span>Message</span>
+         <textarea formControlName="message_content"></textarea>
+     
+        </label>
+        <!-- <input type="file" name="image" id="" formControlName="image_url" (change) ="showPreview($event)"> -->
+        <input type="file" name="image" id="" formControlName="imgUrl" (change) ="showPreview($event)">
+         <!-- <button type="submit">ENVOYER {{this.answer_button_text}}</button>     -->
+    </div>
+    
+        <!--**************************** 
+            //Include Buttons and type 
+            ****************************-->
+    <div class="creation_param">
+        <p class="annuler" name="cancel">Annuler Texte</p>
+         <button (click) ="set_close_state('HEYYY')">Annuler</button>
+        <button (click)="show_form_content()">show Content</button>
+        <!--+++++++++++++++++++++++++++++++ 
+            //Adding ngIF user is moderator
+        ++++++++++++++++++++++++++++++++++ -->
+        <label for="" >
+            <input type="checkbox" name="" id=""> 
+            <span>Il s'agit d'une anonce</span>
+        </label>
+        
+        <button type="submit"  class="envoyer" (click)="onRepondre()">POSTER {{this.answer_button_text}}</button>  
+        
+        
+    </div>
+    
+    <!-- <button class="annuler" name="cancel" (click)="cancel()">Annuler</button> -->
+    <!-- <p class="annuler" name="cancel" (click)="onCancel()" [(ngModel)]="cancel_fired" name="cancel_fired">Annuler Texte</p> -->
+    
+    
+    <!-- <button >{{}}</button> -->
+    <!-- <p>{{}}</p> -->
+    
+</form>
+
+<div class="reactive_preview">
+    <h3>Prévisualisation du message </h3>
+    <article class="preview" *ngIf="observe_form$ | async as preview_form">
+        <!-- <p class="titre">{{message_form.value}}</p> -->
+        <!-- <p class="titre">{{message_form_group.value.title}}</p>
+        <p class="description">{{message_form_group.value.message_content}}</p>
+        <img [src]="message_form_group.value.image_url" alt=""> -->
+        <p class="titre"> <u>Titre:</u> <b>{{preview_form.title}}</b></p>
+        <p class="description"><u>Message:</u><br/>{{preview_form.message_content}}</p>
+        <p><u>image source is</u> {{preview_form.image_url}}</p>
+        <!-- <img [src]="preview_form.image_url" alt="rrr"> -->
+        <img [src]="imagePreview" alt="rrr">
+
+    </article>
+</div>

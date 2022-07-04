@@ -16,6 +16,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorProvider } from 'interceptors';
 import { AppMessageComponent } from './app-message/app-message.component';
 import { AuthGuard } from 'services/auth-guard.service';
+import { ListArticleComponent } from './list-article/list-article.component';
+import { RouterModule } from '@angular/router';
+import { CreationMessageComponent } from './creation-message/creation-message.component';
+import { AnswerComponent } from './answer/answer.component';
 
 
 @NgModule({
@@ -29,14 +33,21 @@ import { AuthGuard } from 'services/auth-guard.service';
     MemberAreaComponent,
     LogoutPageComponent,
     WelcomePageComponent,
-    AppMessageComponent
+    AppMessageComponent,
+    ListArticleComponent,
+    CreationMessageComponent,
+    AnswerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot([
+      // {path:'', component:ListArticleComponent},
+      // {path:'articles/:articleId'},
+    ])
 
   ],
   providers: [HttpInterceptorProvider],

@@ -30,10 +30,11 @@ export class AuthService {
   private token !: String;
   private userId !: String;
   private isLogged = false;
-  private idRole : Number = 0;
+  private idRole !: Number;
   private pseudo !:string;
   public userId2 !:Number;
   private storg_islog !:boolean;
+  usid !:Number;
 
   isAuth$ = new BehaviorSubject<boolean>(false);
 
@@ -124,6 +125,11 @@ export class AuthService {
   }
   getUserId(){
       return this.userId ? this.userId :  this.userId2;
+  }
+
+  getUserId2(){
+   this.usid = Number(localStorage.getItem("id"));
+    return JSON.stringify(this.usid);
   }
   getUserRole(){
       return this.idRole;

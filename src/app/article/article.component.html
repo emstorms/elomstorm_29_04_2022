@@ -1,28 +1,21 @@
-<article>
+<article *ngIf="article">
     <div class="content_structure">
         <div class="profil">
             <img src="../../assets/images/smiley-1981935_640.png" alt="">
-            <span>Pseudo</span>
+            <span>{{article.ownerPseudo }}</span>
         </div>
         <div class="message">
-            <p class="title">Titre: </p>
-            <p class="date">20-02-20 10h24mn50s</p>
+            <p class="title">Titre: {{article.text_title}}</p>
+            <p class="date">{{article.dateCreated}}</p>
             <div class="message_content">
                 <div class="message_img">
                     <!-- <img src="../../assets/images/water-eaf.jpg" alt="" height='100' width='80'> -->
-                    <img src="../../assets/images/water-eaf.jpg" alt="" >
+                    <img src="../../assets/images/water-eaf.jpg" alt="{{article.imgAlt}}" >
                 </div>
                 <div class="message_text">
                     <p>
-                    BLABLA FFFFFFFFFFFFFFFFFLLLLLLLLLLLLLLLLLLLLLLLLLLL
-                    BLABLA FFFFFFFFFFFFFFFFFLLLLLLLLLLLLLLLLLLLLLLLLLLL
-                    BLABLA FFFFFFFFFFFFFFFFFLLLLLLLLLLLLLLLLLLLLLLLLLLL
-                    fffffffffffffffffffffffffffffffff
-                    fffffffffffffffffffffffffffffffff
-                    fffffffffffffffffffffffffffffffff
-                    fffffffffffffffffffffffffffffffff
-                    fffffffffffffffffffffffffffffffff
-                    BLABLA FFFFFFFFFFFFFFFFFLLLLLLLLLLLLLLLLLLLLLLLLLLL
+                        {{article.text_content}}
+                    <!-- BLABLA FFFFFFFFFFFFFFFFFLLLLLLLLLLLLLLLLLLLLLLLLLLL
                     BLABLA FFFFFFFFFFFFFFFFFLLLLLLLLLLLLLLLLLLLLLLLLLLL
                     BLABLA FFFFFFFFFFFFFFFFFLLLLLLLLLLLLLLLLLLLLLLLLLLL
                     fffffffffffffffffffffffffffffffff
@@ -38,7 +31,15 @@
                     fffffffffffffffffffffffffffffffff
                     fffffffffffffffffffffffffffffffff
                     fffffffffffffffffffffffffffffffff
+                    BLABLA FFFFFFFFFFFFFFFFFLLLLLLLLLLLLLLLLLLLLLLLLLLL
+                    BLABLA FFFFFFFFFFFFFFFFFLLLLLLLLLLLLLLLLLLLLLLLLLLL
+                    BLABLA FFFFFFFFFFFFFFFFFLLLLLLLLLLLLLLLLLLLLLLLLLLL
                     fffffffffffffffffffffffffffffffff
+                    fffffffffffffffffffffffffffffffff
+                    fffffffffffffffffffffffffffffffff
+                    fffffffffffffffffffffffffffffffff
+                    fffffffffffffffffffffffffffffffff
+                    fffffffffffffffffffffffffffffffff -->
 
                     </p>
 
@@ -97,3 +98,19 @@
 
    
 </article>
+
+
+<app-creation-message (close_answer_form)="to_close_answer_form($event)" *ngIf="is_shown_answer_form" [parentId] ="parentId"></app-creation-message>
+<div class="rep">
+    <button class="answer_button" (click)="this.to_show_answer_form()">Repondre</button>
+<button class="answer_button" (click)="to_close_answer_form(':D')">Annuler</button>
+<button class="answer_button" (click)="to_open_close_answer()">Montrer les réponses</button>
+</div>
+<div *ngFor="let myAnswerModel of list_answer$ | async">
+    <app-answer [answerModel]="myAnswerModel"></app-answer>
+</div>
+
+
+
+
+    

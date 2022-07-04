@@ -57,7 +57,7 @@ export interface Message{
     users_likes?: string [];
     users_dislikes ?: string [];
     */
-
+    nb_answer : Number;
     is_annonce : boolean;
 }
 
