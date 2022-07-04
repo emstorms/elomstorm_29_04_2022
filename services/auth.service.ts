@@ -135,6 +135,8 @@ export class AuthService {
       return this.idRole;
   }
   getPseudo(){
+      // return this.pseudo;
+      this.pseudo = JSON.stringify(localStorage.getItem("pseudo"));
       return this.pseudo;
   }
 

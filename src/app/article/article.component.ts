@@ -66,6 +66,8 @@ export class ArticleComponent implements OnInit {
         console.log("Model and article");
         console.log(this.article);
         console.log(this.articleModel);
+        //Setting parent ID
+        this.parentId = Number(cont.id);
       }),
       concatMap(singleArticle => this.messageService.getAnswersById(artId).pipe(
       // switchMap(singleArticle => this.messageService.getAnswersById(artId).pipe(
@@ -207,6 +209,25 @@ export class ArticleComponent implements OnInit {
         this.is_shown_answer_list = false;
       }
   
+    }
+
+            /***********
+             * 
+             * Handling polls
+             * ************
+             * 
+             */
+    onVote(p_m : string){
+      console.log("USER ID and article id");
+      console.log(this.auth.getUserId2());
+      console.log(this.parentId);
+      console.log(this.auth.getPseudo());
+      if(p_m =='+'){
+        console.log("VOT +");
+      }else if(p_m =='-'){
+        console.log("VOTE -----");
+      }
+
     }
   
 

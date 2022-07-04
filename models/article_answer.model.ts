@@ -19,6 +19,15 @@ export class Answer_message{
     image_file ?: String;
     ownerPseudo !: String;
     owner_pseudo ?: String;
+
+    //Simple polling
+    likes?:String[];
+    diLikes?:String[];
+}
+
+export interface Polling_data{
+    pseudo : String;
+    article_id: Number;
 }
 
 export interface Answer{

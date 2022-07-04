@@ -11,6 +11,8 @@ import { of } from 'rxjs';
 import { Subject } from 'rxjs';
 import { Answer_message } from 'models/article_answer.model';
 import { AuthService } from './auth.service';
+import {Polling_data }from 'models/article_answer.model';
+
 
 
 
@@ -29,6 +31,7 @@ export class MessageService{
     // obs_subscription_data$!: Observable<Subscription_model>;
     article_model !: Article_message;
     message !: Message;
+    poll_data !: Polling_data;
 
     // list_article$ = new Subject<Article_message[]>();
     list_article$ !: Observable<Article_message[]>;
@@ -162,8 +165,29 @@ export class MessageService{
     
         }
 
-        
-    
+  /*      
+
+   create_article(model_mess : Message, file ?:any):Observable<HttpResponse<Message>>{
+        return this.http.post<Message>(post_message_url,model_mess,{observe :'response'}).pipe(
+            tap(cont => {
+                console.log(`%cIN MESSAGE SERVICE SENDING POSTING WITH POST ${cont}`,"color:blue");
+            }),
+            catchError(error => throwError(error.error.message))
+        )
+
+*/
+        // polling(up_dwn :string,pseudo:string):Observable<HttpResponse<Polling_data>>{
+        polling(poll_data: Polling_data):Observable<HttpResponse<Polling_data>>{
+            const request_url = `http://localhost:3000/api/message/messages/polling`;
+            // return this.http.put<{up_dwn:string,pseudo:string}>(request_url,{observe:'response'}).pipe(
+            return this.http.put<Polling_data>(request_url,poll_data,{observe : 'response'}).pipe(
+                tap(cont => {
+                    console.log("In POLLING Service");
+                })
+            )
+            catchError(error => throwError(error.error.message))
+
+        }
 
 
 /*
