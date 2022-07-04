@@ -3,6 +3,7 @@ const connection = require('../my_connection/db_connection');
 
 
 
+
 // exports.list_message = (req,res => {
 //     console.log("in list_message middleware");
 // })
@@ -54,7 +55,7 @@ VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owne
 exports.showArticles = (req,res,next) => {
     console.log("IN SHOW Article");
     console.log(req.body);
-    const request_text = "SELECT * FROm article_message ORDER BY dateCreated DESC";
+    const request_text = "SELECT * FROm article_message ORDER BY dateCreated DESC ";
     connection.query(request_text,(err,resultat) => {
         if(err){
             console.log(err);
@@ -72,6 +73,22 @@ exports.showArticles = (req,res,next) => {
 
     
     // res.status(200).json({message:"Messages"});
+}
+
+exports.show1Article = (req,res,next) =>{
+    console.log("++++++++++In SHOW article ID Controller");
+    console.log(req.params);
+    request_text = `Select * FROM article_message WHERE id = ${req.params.id}`;
+    console.log(request_text);
+    connection.query(request_text,(err,resultat) => {
+        if(err){
+            console.log(err);
+            res.status(400).json({message:"CAN END REQUEST"}).send({message:"Request not Fullfilled"});
+        }
+        console.log(resultat);
+        res.status(200).json(resultat[0]);
+    })
+    
 }
 
 exports.deleteMessage = (req,res,next) =>{

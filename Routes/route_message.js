@@ -9,6 +9,7 @@ router = express.Router();
 
 router.post('/new_message',messageController.create_new_article);
 router.get('/messages',messageController.showArticles);
+router.get('/messages/:id',messageController.show1Article);
 router.delete('/messages/:id',messageController.deleteMessage);
 
 
