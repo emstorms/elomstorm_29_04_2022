@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup ,FormControl } from '@angular/forms';
 import { AuthService } from 'services/auth.service';
+import { MessageService } from 'services/message.service';
 
 @Component({
   selector: 'app-article-form',
@@ -22,7 +23,10 @@ export class ArticleFormComponent implements OnInit {
   isLogged :boolean = false;
 
 
-  constructor(private auth : AuthService) { }
+  // imagePreview!: string;
+  imagePreview!: any;
+
+  constructor(private auth : AuthService,private messageService :MessageService) { }
 
 
   //Methods 
@@ -38,10 +42,50 @@ export class ArticleFormComponent implements OnInit {
     console.log(this.auth.checkIsLogged());
 
   }
+  showPreview(event : Event){
+    console.log("EVENT");
+    const file =(event.target as HTMLInputElement).files![0];
+    this.write_form_g.get('image_url')!.setValue(file);
+    // this.message_form_group.get('image_url')!.setValue(this.myFile);
+    this.write_form_g.updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = ()=> {
+     this.imagePreview = reader.result as string;
+    }
+
+  }
+
+  imgpreviewsrc(src :string){
+    const reader = new FileReader();
+    reader.onload = ()=> {
+      return reader.result as string;
+    }
+    // cont src_ = ()
+  }
 
   onPoster(){
     console.log("++POSTER CLICKED++");
-    console.log(this.auth.checkIsLogged());
+    console.log(this.auth.checkIsLogged2());
+    console.log("userInfo");
+    console.log(localStorage.getItem('id'));
+    console.log(this.write_form_g.value);
+    if(this.write_form_g.get('image_url') != null){
+      //Contain FIle
+      this.imagePreview = this.imgpreviewsrc(this.write_form_g.value.image_url);
+      // const file = this.imgpreviewsrc(this.write_form_g.get('image_url'));
+     
+      this.messageService.create_article(this.write_form_g.value).subscribe(response => {
+        console.log("+++CREATE MESSAGE RESPONSE");
+        console.log(response);
+      });
+    }else{
+      console.log("NO FILE");
+      this.messageService.create_article(this.write_form_g.value).subscribe(response => {
+        console.log("+++CREATE MESSAGE RESPONSE");
+        console.log(response);
+      });
+    }
+    
   }
 
 

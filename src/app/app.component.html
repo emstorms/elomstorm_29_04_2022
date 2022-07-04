@@ -12,3 +12,13 @@
 
 <!-- https://stackoverflow.com/questions/28101540/http-delete-not-sending-authorization-header-angular-js  NO AUTHO For Delete -->
 <!-- https://stackoverflow.com/questions/13105019/how-to-add-on-delete-cascade-and-on-update-restrict-using-phpmyadmin  Can't See ONDELETE Condition in phpmyadmin-->
+<!-- member_area Line 85 Set timout to navigate on welcome page -->
+<!-- /*START Transaction;
+SET @my_var = (SELECT pseudo FROM USer_ Where id = 14);
+INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,imgAlt,ownerPseudo)
+
+    VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",@my_var);
+
+COMMIT;
+
+*/ -->

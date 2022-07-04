@@ -11,7 +11,7 @@
                     <label for="titre">
                         <span>Titre</span>
                      <!-- <input type="text" [formControl]="message_form"> -->
-                        <input type="text" formControlName="title">
+                        <input type="text" formControlName="title" (change)="showPreview($event)">
                     </label>
                
                      <label for="message_content">

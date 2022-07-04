@@ -59,7 +59,7 @@ export class MemberAreaComponent implements OnInit {
       // window.alert("Veuillez vous connecter avant poursuivre");
       console.log(token);
       //Emit message
-      this.app_message = "Veuillez vous connecter avant poursuivre";
+      this.app_message = "Veuillez vous connecter avant de poursuivre";
       return;
     } 
                   // CONFIRM BEFORE DELETE
@@ -78,7 +78,13 @@ export class MemberAreaComponent implements OnInit {
    */
 
 
-     this.auth.deleteUser(token, this.myInfo.id).subscribe();
+     this.auth.deleteUser(token, this.myInfo.id).subscribe(response =>{
+      console.log("RESPONSE MESSAGE IS");
+      console.log(response.status);
+      if(response.status == 200){
+        this.app_message = "Le compte a bien été Supprimé, vous allez être rediriger A la page d'accueil dans $setTimeout then navigateByUrl";
+      }
+     });
 
   }
 

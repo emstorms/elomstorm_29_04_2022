@@ -15,6 +15,7 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorProvider } from 'interceptors';
 import { AppMessageComponent } from './app-message/app-message.component';
+import { AuthGuard } from 'services/auth-guard.service';
 
 
 @NgModule({

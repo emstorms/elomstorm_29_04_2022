@@ -10,6 +10,7 @@ import { catchError,map,tap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { InterfaceMessageService } from 'src/app/interface-message.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,8 @@ export class AuthService {
   private pseudo !:string;
   public userId2 !:Number;
   private storg_islog !:boolean;
+
+  isAuth$ = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, app_message : InterfaceMessageService) { }
 
@@ -185,14 +188,14 @@ export class AuthService {
 
                                     //Manage ACCOUNT
 
-   deleteUser(token:any, areaId:Number): Observable<userModel>{
+   deleteUser(token:any, areaId:Number): Observable<HttpResponse<userModel>>{
     console.log("++++++++DELETING ACCOUNT");
     console.log(token);
     console.log("User Id");
     
     const request_url =`http://localhost:3000/api/auth/user/${areaId}`;
 
-    return this.http.delete<userModel>(request_url).pipe(
+    return this.http.delete<userModel>(request_url,{observe:'response'}).pipe(
       tap(cont => {
         console.log("In DELETE TAP");
         console.log(cont);
