@@ -2,7 +2,7 @@
 pj7_updating
 
 #Running
-use npm run start for each
+use npm run start on each
 
 #Dependencies 
   "bcrypt": 
