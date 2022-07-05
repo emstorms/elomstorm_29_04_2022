@@ -21,4 +21,62 @@ INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,img
 
 COMMIT;
 
+BEGIN
+	Set @sign  = poll_sign;
+	SET @plus = -10;
+    SET @minus = -11;
+  	SET @userId = id_user;
+    SET @pseudo = pseudo;
+    Set @id_article = id_article;   
+    
+    DELETE FROM polling WHERE polling.id_user = @userId;
+  
+   SELECT COUNT(*) INTO @has_poll FROM polling 
+   		WHERE polling.id_user = @userId ;
+   /* IF POLL is 0 THEN INSERT*/
+   IF @has_poll = 0 THEN 
+   		IF @sign = '-' THEN 
+        	INSERT INTO polling (id_article,id_user,is_like)
+            	VALUES(@id_article,@userId,0);
+        ELSE IF @sign = '+' THEN 
+        	INSERT INTO polling (id_article,id_user,is_like)
+            	VALUES(@id_article,@userId,1);
+   		END IF
+    END IF
+    
+    SELECT * FROM polling WHERE polling.id = @userId;
+ 
+END
+
+
+OKK**************
+
+
+
+BEGIN
+START TRANSACTION;
+	Set @poll_sign  = poll_sign;
+	SET @plus = -10;
+    SET @minus = -11;
+  	SET @id_user = id_user;
+    SET @pseudo = pseudo;
+    Set @id_article = id_article;   
+    
+    DELETE FROM polling WHERE polling.id_user = @id_user;
+COMMIT;
+   SELECT COUNT(*) INTO @has_poll FROM polling 
+   		WHERE polling.id_user = @id_user ;
+           
+   /* IF POLL is 0 THEN INSERT*/
+  	 IF @has_poll <= 0 THEN  
+ 		INSERT INTO polling (id_article,id_user,is_liked)
+    	VALUES(@id_article,@id_user,@poll_sign);     
+    END IF;
+  
+    SELECT * From polling where polling.id_user = @id_user 
+    	AND polling.id_article = @id_article;        
+   
+END
+
+
 */ -->

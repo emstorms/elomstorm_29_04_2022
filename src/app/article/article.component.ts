@@ -6,10 +6,11 @@ import { Observable,switchMap,tap,concatMap } from 'rxjs';
 import { Article_message } from 'models/article-message.model';
 import { CreationMessageComponent } from '../creation-message/creation-message.component';
 import { Input } from '@angular/core';
-import { Answer, Answer_message } from 'models/article_answer.model';
+import { Answer, Answer_message, Polling_data } from 'models/article_answer.model';
 import { AuthService } from 'services/auth.service';
 import { HttpClient } from '@angular/common/http';
-
+import { HttpResponse } from '@angular/common/http';
+import { Polling_data2 } from 'models/article_answer.model';
 
 
 @Component({
@@ -46,7 +47,17 @@ export class ArticleComponent implements OnInit {
   test_message :string = "testmessage est là";
   nb_like :Number = 0;
   nb_dislike :Number = 0;
-
+                //Polling
+  all_likes !: number;
+  all_dislikes !: number;    
+  my_liked !:number;
+  my_disliked !: number;            
+  poll_data !: Polling_data;
+  poll_returned !: Polling_data;
+  poll_plus !: number;
+  poll_minus !: number;
+  observe_poll$ !:Observable<HttpResponse<Polling_data>>;
+  observe_all_polls !:Observable<HttpResponse<Polling_data[]>>;
 
 
   constructor(private route : ActivatedRoute, private messageService : MessageService, private auth : AuthService, private http: HttpClient) { }
@@ -56,6 +67,7 @@ export class ArticleComponent implements OnInit {
     this.articleModel = new Article_message();
     // console.log("+++++++++SNAP ");
     console.log(artId);
+  
     // this.article$ = this.messageService.getArticleById(artId);
     this.list_answer$ = this.messageService.getArticleById(artId).pipe(
       tap(cont => {
@@ -68,20 +80,41 @@ export class ArticleComponent implements OnInit {
         console.log(this.articleModel);
         //Setting parent ID
         this.parentId = Number(cont.id);
+        this.poll_data = new Polling_data();
+        this.poll_returned = new Polling_data();
       }),
       concatMap(singleArticle => this.messageService.getAnswersById(artId).pipe(
       // switchMap(singleArticle => this.messageService.getAnswersById(artId).pipe(
         tap(cont2 => {
           console.log("AFTER SWITCH MAP+++++++");
           console.log(cont2);
-        })
-      )
+        }),
+      )),
      
-    ));
+    
+    );
     // this.article$.subscribe(ee=>{
     this.list_answer$.subscribe(ee=>{
       console.log("SUBSCRIBE+++++++");
     });
+
+
+
+            // GETTING POLLLS
+    this.observe_all_polls = this.messageService.getPollingById(artId).pipe(
+      // switchMap(singleArticle => this.messageService.getAnswersById(artId).pipe(
+        tap(cont2 => {
+          console.log("AFTER SWITCH MAP+++++++");
+          console.log(cont2);
+          console.log("TYPE OF ")
+          console.log(typeof cont2.body);
+        }),
+      )
+
+      this.observe_all_polls.subscribe(ee => {
+        // console.log("++++SUBSCRIBE ALL POLL");
+        // console.log(ee);
+      });
 
 /*    
     this.article$.subscribe(rep =>{
@@ -222,10 +255,60 @@ export class ArticleComponent implements OnInit {
       console.log(this.auth.getUserId2());
       console.log(this.parentId);
       console.log(this.auth.getPseudo());
+      this.poll_data.id_user = Number(this.auth.getUserId2());
+      this.poll_data.article_id = Number(this.parentId);
+      this.poll_data.pseudo = JSON.parse(this.auth.getPseudo());
+      console.log("POLLING DATA");
+      console.log(this.poll_data);
       if(p_m =='+'){
         console.log("VOT +");
+        this.poll_data.poll_sign = '+';
+        console.log(this.poll_data);
+        this.observe_poll$ = this.messageService.polling(this.poll_data).pipe(
+          tap(cont => {
+            console.log("IN TAP POLL +");
+            console.log(cont);
+            console.log(cont.body);
+
+            this.poll_returned.id_user = Number(cont.body?.id_user);
+            this.poll_returned.id_article = Number(cont.body?.id_article); 
+            this.poll_returned.is_liked = JSON.stringify(cont.body?.is_liked);
+            
+            console.log("AFTHER POLL ASSSIGN");
+            console.log(this.poll_returned.is_liked);
+
+            this.my_liked = 1;
+            this.my_disliked = 0;
+          })
+        )
+        this.observe_poll$.subscribe();
       }else if(p_m =='-'){
+        this.poll_data.poll_sign = "-";
         console.log("VOTE -----");
+        console.log(this.poll_data);
+        this.observe_poll$ = this.messageService.polling(this.poll_data).pipe(
+          tap(cont => {
+            console.log("IN TAP POLL");
+            console.log(cont);
+            console.log(cont.body?.id_user);
+            
+            // console.log(cont.body?.id_article);
+            // this.poll_returned = {...cont.body};
+            this.poll_returned.id_user = Number(cont.body?.id_user);
+            this.poll_returned.id_article = Number(cont.body?.id_article); 
+            this.poll_returned.is_liked = JSON.stringify(cont.body?.is_liked); 
+
+            this.my_liked = 0;
+            this.my_disliked = 1;
+            
+            // this.poll_returned.id_user = 
+            console.log("AFTHER POLL ASSSIGN");
+            console.log(this.poll_returned.is_liked);
+
+          })
+        );
+        this.observe_poll$.subscribe();
+
       }
 
     }

@@ -25,9 +25,20 @@ export class Answer_message{
     diLikes?:String[];
 }
 
-export interface Polling_data{
-    pseudo : String;
-    article_id: Number;
+export class Polling_data{
+    id_user !: Number;
+    pseudo !: String;
+    poll_sign !: String;
+    article_id !: Number;
+    id_article?: Number;
+    
+    is_liked?:String;
+}
+
+export interface Polling_data2{
+    id_article:Number
+    id_user:Number;
+    is_liked:String;
 }
 
 export interface Answer{

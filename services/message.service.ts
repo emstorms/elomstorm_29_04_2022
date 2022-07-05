@@ -180,7 +180,7 @@ export class MessageService{
         polling(poll_data: Polling_data):Observable<HttpResponse<Polling_data>>{
             const request_url = `http://localhost:3000/api/message/messages/polling`;
             // return this.http.put<{up_dwn:string,pseudo:string}>(request_url,{observe:'response'}).pipe(
-            return this.http.put<Polling_data>(request_url,poll_data,{observe : 'response'}).pipe(
+            return this.http.post<Polling_data>(request_url,poll_data,{observe : 'response'}).pipe(
                 tap(cont => {
                     console.log("In POLLING Service");
                 })
@@ -188,6 +188,29 @@ export class MessageService{
             catchError(error => throwError(error.error.message))
 
         }
+
+        getPollingById(id:number):Observable<HttpResponse<Polling_data[]>>{
+            const request_url = `http://localhost:3000/api/message/messages/polling/${id}`;
+            
+            
+            return this.http.get<Polling_data[]>(request_url,{observe:'response'}).pipe(
+                tap(cont => {
+                    console.log(" ALL POLLING length ");
+                    console.log(cont);
+                    // console.log(cont.length);
+                    
+                    // if(cont.length > 0){
+                    //      console.log("MESSAGE LIST ID");
+                    //     console.log(cont);
+                    // }
+                    
+                })
+            )
+            // ).subscribe();
+          
+
+        }
+
 
 
 /*
