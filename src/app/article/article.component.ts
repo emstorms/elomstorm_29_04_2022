@@ -48,8 +48,8 @@ export class ArticleComponent implements OnInit {
   nb_like :Number = 0;
   nb_dislike :Number = 0;
                 //Polling
-  all_likes !: number;
-  all_dislikes !: number;    
+  all_likes !: number[];
+  all_dislikes !: number[];    
   my_liked !:number;
   my_disliked !: number;            
   poll_data !: Polling_data;
@@ -58,6 +58,8 @@ export class ArticleComponent implements OnInit {
   poll_minus !: number;
   observe_poll$ !:Observable<HttpResponse<Polling_data>>;
   observe_all_polls !:Observable<HttpResponse<Polling_data[]>>;
+  display_likes !:number;
+  display_dislikes !:number;
 
 
   constructor(private route : ActivatedRoute, private messageService : MessageService, private auth : AuthService, private http: HttpClient) { }
@@ -82,6 +84,9 @@ export class ArticleComponent implements OnInit {
         this.parentId = Number(cont.id);
         this.poll_data = new Polling_data();
         this.poll_returned = new Polling_data();
+
+        this.all_likes = [];
+        this.all_dislikes =[];
       }),
       concatMap(singleArticle => this.messageService.getAnswersById(artId).pipe(
       // switchMap(singleArticle => this.messageService.getAnswersById(artId).pipe(
@@ -105,9 +110,35 @@ export class ArticleComponent implements OnInit {
       // switchMap(singleArticle => this.messageService.getAnswersById(artId).pipe(
         tap(cont2 => {
           console.log("AFTER SWITCH MAP+++++++");
-          console.log(cont2);
+          console.log(cont2.body);
+          console.log(cont2.body?.length);
           console.log("TYPE OF ")
           console.log(typeof cont2.body);
+          let arr = JSON.stringify(cont2.body);
+          console.log(arr);
+          const a2 = JSON.parse(arr);
+          console.log(a2.length);
+          // console.log(arr.length);
+          // console.log(typeof arr);
+          console.log(typeof a2[1]);
+          for(let i in a2){
+            console.log("FETCH AR");
+            console.log(a2[i].id_article);
+            if(a2[i].is_liked == "-"){
+              this.all_dislikes.push(a2[i]);
+            }else if(a2[i].is_liked =="+"){
+              this.all_likes.push(a2[i]);
+            }
+          } 
+          console.log("LIKE DISLIKE LEngth");
+          console.log(this.all_dislikes.length)
+          console.log(this.all_likes.length)
+
+                //UPDATING LIKES AND dislikes
+          this.display_likes = this.all_likes.length;
+          this.display_dislikes = this.all_dislikes.length;
+
+          // this.all_dislikes = arr.filter()
         }),
       )
 
@@ -281,7 +312,9 @@ export class ArticleComponent implements OnInit {
             this.my_disliked = 0;
           })
         )
-        this.observe_poll$.subscribe();
+        this.observe_poll$.subscribe(() =>{
+          location.reload();
+        });
       }else if(p_m =='-'){
         this.poll_data.poll_sign = "-";
         console.log("VOTE -----");
@@ -307,7 +340,9 @@ export class ArticleComponent implements OnInit {
 
           })
         );
-        this.observe_poll$.subscribe();
+        this.observe_poll$.subscribe(() =>{
+          location.reload();
+        });
 
       }
 
