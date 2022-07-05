@@ -1,4 +1,5 @@
 // const connection = require('../my_connetion/db_connection');
+const { createPool } = require('mysql');
 const connection = require('../my_connection/db_connection');
 
 
@@ -151,5 +152,85 @@ exports.get_article_answers = (req,res,next) => {
     
 }
 
+
+                //Polling
+exports.polling = (req,res,next) =>{
+    console.log("IN PPLLING++++++++++++");
+    console.log(req.body);
+    console.log(req.body.poll_sign);
+    console.log(req.body.id_user);
+    console.log(req.body.article_id);
+    console.log(req.body.pseudo);
+    
+    
+    const query_text =`CALL poling("${req.body.id_user}","${req.body.article_id}","${req.body.pseudo}","${req.body.poll_sign}")`;
+    console.log(query_text);
+    if(req.body.poll_sign =="-" || req.body.poll_sign =="+"){
+        console.log("We can send Data");
+        connection.query(query_text,(err,resultat) => {
+            if(err){
+                console.log(err);
+                throw ("CAN't REquest");
+                // return res.status(400).json({message:"CAN END REQUEST"}).send({message:"Request not Fullfilled"});
+            }
+            // console.log(resultat);
+            console.log("RESULTAT ");
+            
+            // console.log(typeof resultat);
+            // console.log(resultat);       
+            console.log(resultat);       
+            console.log(JSON.stringify(resultat[0][0]));       
+            console.log(resultat[0][0]);       
+            // res.status(200).json(resultat);
+          return res.status(200).json(resultat[0][0]);
+        })
+
+
+
+
+        
+    }else{
+        console.log("Error");
+        return res.status(402).json({message:"CAN END REQUEST"});        
+    }
+
+}
+
+exports.messagePollingList = (req,res,rext) => {
+    try{
+        console.log("+++++POLLING GET ALL");
+        console.log(req.params);
+        const request_text =`SELECT * FROM POLLING WHERE id_article = ${req.params.id}`;
+        console.log(request_text);
+
+        connection.query(request_text,(err,resultat) => {
+
+      
+        if(err){
+            console.log(err);
+            // return res.status(400).json({message:"CAN END REQUEST"}).send({message:"Request not Fullfilled"});
+            throw("Can't request");
+        }
+        console.log(resultat);
+        console.log("RESULTAT ");
+        // console.log(typeof resultat);
+        console.log(resultat);       
+        console.log(resultat.length);
+        return res.status(200).json(resultat);
+        // return res.status(200).json(resultat);
+      
+    })
+
+
+    }catch {
+        return res.status(400).json({message:"Le message+++++POLLING GET AL"});
+    }
+
+  
+
+ 
+  
+    
+}
 
 
