@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup ,FormControl } from '@angular/forms';
+import { Message } from 'models/article-message.model';
 import { AuthService } from 'services/auth.service';
 import { MessageService } from 'services/message.service';
 
@@ -22,7 +23,7 @@ export class ArticleFormComponent implements OnInit {
   // article_model !: Article_message;
   isLogged :boolean = false;
 
-
+  message !:Message;
   // imagePreview!: string;
   imagePreview !: any;
   imageBase64: string = '';
@@ -85,16 +86,19 @@ export class ArticleFormComponent implements OnInit {
 
   onPoster(){
     console.log("++POSTER CLICKED++");
-    console.log(this.auth.checkIsLogged2());
-    console.log("userInfo");
-    console.log(localStorage.getItem('id'));
+    
     console.log(this.write_form_g.value);
     if(this.write_form_g.get('image_url') != null){
       //Contain FIle
       this.imagePreview = this.imgpreviewsrc(this.write_form_g.value.image_url);
       // const file = this.imgpreviewsrc(this.write_form_g.get('image_url'));
+     this.message = {
+        ...this.write_form_g.value
+     }
+     this.message.image_url  = this.imageBase64;
      
-      this.messageService.create_article(this.write_form_g.value).subscribe(response => {
+     console.log(this.message.image_url);
+      this.messageService.create_article(this.message).subscribe(response => {
         console.log("+++CREATE MESSAGE RESPONSE");
         console.log(response);
       });

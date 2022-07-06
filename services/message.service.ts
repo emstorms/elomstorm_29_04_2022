@@ -53,36 +53,17 @@ export class MessageService{
             )
         }
    
-        /*     getArticles(){
-            const request_url = "http://localhost:3000/api/message/messages"
-             return this.http.get<Article_message[]>(request_url).pipe(
-                tap(list_article => {
-                    this.list_article$.next(list_article);
-                }),
-                tap(list => {
-                    console.log("LIST MESSAGE")    ;
-                    console.log(list);
-                }),
-                catchError(error => {
-                    console.error(error.error.message);
-                    return of([]);
-                  })  
-            ).subscribe();
-        }
-
-      */  
-
         //Create an article
         create_message(){
             this.canCreateMessage = true;
         }
 
         // create_article(model_mess : Article_message, file ?:any){
-        create_article(model_mess : Message, file ?:any):Observable<HttpResponse<Message>>{
+        create_article(model_mess : Message):Observable<HttpResponse<Message>>{
             console.log("IN SERVICE CREATE ARTICLE");
             console.log(model_mess);
-            console.log("File");
-            console.log(file);
+            console.log(typeof model_mess.image_url);
+            
             //add ID From localstorage
             model_mess.article_owner_id = Number(localStorage.getItem('id'));
         
@@ -97,8 +78,6 @@ export class MessageService{
                 }),
                 catchError(error => throwError(error.error.message))
             )
-            
-
         }
 
         delete_article(id_message :Number) :Observable<any>{
