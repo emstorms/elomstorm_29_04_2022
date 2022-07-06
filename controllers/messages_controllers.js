@@ -12,47 +12,44 @@ const connection = require('../my_connection/db_connection');
 
 exports.create_new_article = (req,res,next) =>{
     console.log("+++++++IN BACKEND MESSAGE CONTROLLER");
-    console.log(req.body);
-    // console.log(req);
-    
-    // const request_message ="INSERT INTO article_message(text_title,text_content,owner_id,owner_name)";
-/*
-    const request_text =`INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,imgAlt)
+    // console.log(req.body);
 
-    VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",);`;
-    */
-/*
-    const request_text =`START Transaction;
-SET @my_var = (SELECT pseudo FROM USer_ Where id = 14);
-INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,imgAlt,pseudo)
-  VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",@my_var);
-COMMIT;`;
-*/
-const jsondatafile = JSON.stringify(req.body.image_file);
-const request_text =`INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,imgAlt,ownerPseudo,image_file_blob,image_file_json)
-
-VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",(SELECT pseudo FROM user_ WHERE id = ${req.body.article_owner_id}),"${req.body.image_file}",${jsondatafile} );`;
-
-
-    console.log(request_text);
+// const request_text =`INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,imgAlt,ownerPseudo,image_file_blob,image_file_json)
+// VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",(SELECT pseudo FROM user_ WHERE id = ${req.body.article_owner_id}),"${req.body.image_file}",${jsondatafile} );`;
+const request_text =`INSERT INTO 
+article_message (
+                text_title,
+                text_content,
+                article_owner_id,
+                imgUrl,
+                imgAlt,
+                ownerPseudo
+                )
+VALUES(
+    "${req.body.title}",
+    "${req.body.message_content}",
+    ${req.body.article_owner_id},
+    "${req.body.image_url}",
+    "${req.body.image_alt}",
+    (SELECT pseudo FROM user_ WHERE id = ${req.body.article_owner_id})
+    );`;
     // ,"${LOAD_FILE('req.body.imgUrl}')}"
 
-
+    // console.log(request_text);
     connection.query(request_text,(err,resultat) => {
         if(err){
-            console.log(err);
+            console.log("ERRROR");
+            // console.log(err);
             // throw error;
+            res.status(403).json({message:`CAN END REQUEST ${err}`}).send(err);
             return;
-        }
-        
+        }     
           console.log("MESSAGE SENT");
-          console.log(resultat);
+        //   console.log(resultat);
 
-    
+        res.status(200).json({message:"NEW ARTICLE CONTROLLER"});
+        
     })
-
-    res.status(200).json({message:"NEW ARTICLE CONTROLLER"});
-
 
 }
 
@@ -64,7 +61,6 @@ exports.create_new_answer = (req,res,next) =>{
     const request_text = `INSERT INTO answer_article(id_article,id_user,text_title,text_content,image_url,image_alt,image_file,owner_pseudo)
     VALUES(${req.body.article_id},${req.body.answer_owner_id},"${req.body.title}","${req.body.message_content}","${req.body.image_url}","${req.body.img_alt}","${req.body.image_url_file}",(SELECT pseudo FROM user_ WHERE user_.id = ${req.body.answer_owner_id}))`;
     // VALUES(${req.body.article_id},${req.body.answer_owner_id},"${req.body.title}","${req.body.message_content}","image","image_alt")`;
-
     connection.query(request_text,(err,resultat) => {
         if(err){
             console.log(err);
@@ -87,17 +83,14 @@ exports.showArticles = (req,res,next) => {
             console.log(err);
             // throw error;
             return;
-        }
-        
+        }      
           console.log("SELECT * FRom MEssage");
           console.log(resultat[0].id);
           let sendres = [];
           sendres = [...resultat];
         //   console.log(sendres);
          res.status(200).json(sendres);
-    })
-
-    
+    })  
     // res.status(200).json({message:"Messages"});
 }
 
@@ -113,8 +106,7 @@ exports.show1Article = (req,res,next) =>{
         }
         console.log(resultat);
         res.status(200).json(resultat[0]);
-    })
-    
+    })   
 }
 
 exports.deleteMessage = (req,res,next) =>{
@@ -136,10 +128,7 @@ exports.deleteMessage = (req,res,next) =>{
     }catch(ee) {
         console.log(ee);
         res.status(400).json({message:"CAN END REQUEST"}).send({message:"Request not Fullfilled"});
-    }
-    
-  
-    
+    } 
 }
 
 exports.get_article_answers = (req,res,next) => {
@@ -156,12 +145,8 @@ exports.get_article_answers = (req,res,next) => {
         console.log("RESULTAT ");
         // console.log(typeof resultat);
         console.log(resultat);       
-        res.status(200).json(resultat);
-      
-    })
-  
-      
-    
+        res.status(200).json(resultat);   
+    })    
 }
 
 
@@ -173,8 +158,6 @@ exports.polling = (req,res,next) =>{
     console.log(req.body.id_user);
     console.log(req.body.article_id);
     console.log(req.body.pseudo);
-    
-    
     const query_text =`CALL poling("${req.body.id_user}","${req.body.article_id}","${req.body.pseudo}","${req.body.poll_sign}")`;
     console.log(query_text);
     if(req.body.poll_sign =="-" || req.body.poll_sign =="+"){
@@ -185,27 +168,17 @@ exports.polling = (req,res,next) =>{
                 throw ("CAN't REquest");
                 // return res.status(400).json({message:"CAN END REQUEST"}).send({message:"Request not Fullfilled"});
             }
-            // console.log(resultat);
-            console.log("RESULTAT ");
-            
-            // console.log(typeof resultat);
-            // console.log(resultat);       
+            console.log("RESULTAT ");     
             console.log(resultat);       
             console.log(JSON.stringify(resultat[0][0]));       
             console.log(resultat[0][0]);       
             // res.status(200).json(resultat);
           return res.status(200).json(resultat[0][0]);
-        })
-
-
-
-
-        
+        })       
     }else{
         console.log("Error");
         return res.status(402).json({message:"CAN END REQUEST"});        
     }
-
 }
 
 exports.messagePollingList = (req,res,rext) => {
@@ -214,10 +187,7 @@ exports.messagePollingList = (req,res,rext) => {
         console.log(req.params);
         const request_text =`SELECT * FROM POLLING WHERE id_article = ${req.params.id}`;
         console.log(request_text);
-
         connection.query(request_text,(err,resultat) => {
-
-      
         if(err){
             console.log(err);
             // return res.status(400).json({message:"CAN END REQUEST"}).send({message:"Request not Fullfilled"});
@@ -229,20 +199,11 @@ exports.messagePollingList = (req,res,rext) => {
         console.log(resultat);       
         console.log(resultat.length);
         return res.status(200).json(resultat);
-        // return res.status(200).json(resultat);
-      
+        // return res.status(200).json(resultat); 
     })
-
-
     }catch {
         return res.status(400).json({message:"Le message+++++POLLING GET AL"});
-    }
-
-  
-
- 
-  
-    
+    }  
 }
 
 

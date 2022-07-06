@@ -32,9 +32,7 @@ exports.deleteUser = (req,res,next) =>{
         console.log(err);
         res.status(401).json({message: "ERROR GETTING USers INFO"});
 
-    }
-  
-    
+    }   
 }
 
 
@@ -114,25 +112,18 @@ exports.subscription = (req,res) =>{
                     // 
                     if(error.sqlState == 23000 || error.code =='ER_DUP_ENTRY'){
                         console.log("-------THAT Email Already Exists");
-                        throw new Error("this email is already used. Try another one");
+                        throw("this email is already used. Try another one");
                     }
                     // throw error;
-/*
-                    code: 'ER_DUP_ENTRY',
-                    errno: 1062,
-                    sqlMessage: "Duplicate entry 'aa1@aa.com' for key 'user_.unq_mail'",
-                    sqlState: '23000',
-                  
-*/
                 }
-                res.status(200).json({message: "OK IN SUBSCRIPTION  NEED TO SEND DATA TO ----->>>> frontend for ngif"});
+                res.status(200).json({message: "User Is saved"});
         
             }); 
 
             });
       
     }catch(err){
-        console.log("IN CAAAATCHQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+        console.log("IN CAAAATCHQQQQQQQQ");
         // console.log(err);
         res.status(400).json({message: "ERRREUR PENDANT LA REQUETE"});
     }
@@ -143,8 +134,8 @@ exports.subscription = (req,res) =>{
 
 exports.login = (req,res) => {
     try{
-        console.log("IN LOGIN CONTROLLER");
-        console.log(req.body);
+        // console.log("IN LOGIN CONTROLLER");
+        // console.log(req.body);
         is_valid_log = false;
         const log_data = req.body;
 
@@ -168,8 +159,8 @@ exports.login = (req,res) => {
              throw ("-----TRHOWN ERROR =>Email inexistant => créer un autre email---");
         }
         
-          console.log("RESULTAT nb_exists and iscorrect_pass");
-          console.log(resultat);
+        //   console.log("RESULTAT nb_exists and iscorrect_pass");
+        //   console.log(resultat);
     
    if(!resultat[0].nb_exists){
     // console.log("Email inexistant => créer un nouveau");
@@ -181,10 +172,7 @@ exports.login = (req,res) => {
     console.log("PASssword");
     console.log(resultat[0]);
 
-    // console.log("password is incorrect");
-    // throw new Error("---------THROW ERROR  Password incorrect");
    }
-
 
                                         /**********************
                                             ??????HASHE COMPARE?
@@ -192,16 +180,9 @@ exports.login = (req,res) => {
     console.log(resultat[0]);
     bcrypt.compare(req.body.password,resultat[0].iscorrect_pass)
         .then(isCorrectPassword => {
-            console.log("++++++++CORRECT PASSWORD");
-            console.log(isCorrectPassword);
             if(!isCorrectPassword){
-            // throw new Error("Your Password is Incorrect");
-                console.log("Your Password iS INCORRECT");
-                
-                console.log(req.body.password);
-                console.log(resultat[0].iscorrect_pass);
-                throw ("Your Password is Incorrect");
-                
+            throw new Error("Your Password is Incorrect");
+             
                 // return res.status(401).json({message:`IMPOSSIBLE DE SE CONNECTER ${err}`}).send(err);
             }
                 //
@@ -224,18 +205,14 @@ exports.login = (req,res) => {
                     
                     `${"CODE_TOKEN"}`,
                     { expiresIn: '48h' }
-                    )
-                    
-                });
-                
+                    )                
+                });         
             })
-            // .catch();
                                        
    console.log("USER IS COORECTLY LOGGED SET is_valid_login true");
 
 })
 
-    
 
     }catch(err){
         console.log("*******ERROR LOGIN************");
