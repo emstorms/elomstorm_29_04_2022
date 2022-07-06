@@ -5,6 +5,7 @@ import { Input } from "@angular/core";
 export class Article_message{
     //PK are owner_id article_id and  id_type
 
+    //s
     // article_id ?: Number;
     id ?: Number;
     article_owner_id !: Number;
