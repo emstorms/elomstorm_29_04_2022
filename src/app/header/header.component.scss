@@ -9,7 +9,13 @@ header{
         display:flex;
         justify-content: center;
         align-items: center;
+        width:100%;
         flex-basis:20%;
+        align-self: center;
+        margin: 10px auto;
+        img{
+            width:100%;
+        }
     }
 
     .header_nav{
@@ -34,11 +40,12 @@ header{
     //li Item Text and border
     li{
         display:flex;
-        background-color: var(--beige);
+        // background-color: var(--beige);
         list-style: none;
         // padding:10px;
         border-radius: 3px;
         margin:7px;
+        color:white;
         
 
        
@@ -47,7 +54,7 @@ header{
             display:flex;
             justify-content: space-around;
             align-items: center;
-            color:black;
+            color:white;
             text-decoration: none;
             padding:10px;
 

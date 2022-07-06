@@ -24,7 +24,8 @@ export class ArticleFormComponent implements OnInit {
 
 
   // imagePreview!: string;
-  imagePreview!: any;
+  imagePreview !: any;
+  imageBase64: string = '';
 
   constructor(private auth : AuthService,private messageService :MessageService) { }
 
@@ -54,6 +55,25 @@ export class ArticleFormComponent implements OnInit {
     }
 
   }
+
+  testbase64(event: any) {
+    console.log("++++Change++");
+    // if(event.target.files && event.target.files[0])
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      const image = new Image(); 
+      image.src = e.target.result;
+      image.onload = rs => {
+        const imageBase64Path = e.target.result;
+        this.imageBase64 = imageBase64Path;
+        console.log(imageBase64Path);
+      }
+    }
+    reader.readAsDataURL(event.target.files[0]);
+
+  }
+
+
 
   imgpreviewsrc(src :string){
     const reader = new FileReader();

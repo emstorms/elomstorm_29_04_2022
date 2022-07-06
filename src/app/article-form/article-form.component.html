@@ -11,7 +11,7 @@
                     <label for="titre">
                         <span>Titre</span>
                      <!-- <input type="text" [formControl]="message_form"> -->
-                        <input type="text" formControlName="title" (change)="showPreview($event)">
+                        <input type="text" formControlName="title" >
                     </label>
                
                      <label for="message_content">
@@ -20,13 +20,16 @@
                  
                     </label>
                     
-                    <input type="file" name="image" id="" formControlName="image_url">
+                    <input type="file" name="image" id="" formControlName="image_url" (change)="testbase64($event)">
     
                     <input type="submit" value="POSTER" >
                  
                 </div>
                 
         </form>
+        <div>
+            <img [src]="imageBase64" alt="" style="width:100px; height:100px;">
+        </div>
         <!-- <form class="cont" *ngIf="is_annonce; else !is_annonce">
         <label for="is_annonce" >
             <input type="checkbox" name="" id="">
