@@ -57,12 +57,19 @@ export class MessageService{
         create_message(){
             this.canCreateMessage = true;
         }
+        // DECODE FILE
+
+        decodeBase64(filedata: any){
+
+        }
+
+
 
         // create_article(model_mess : Article_message, file ?:any){
         create_article(model_mess : Message):Observable<HttpResponse<Message>>{
             console.log("IN SERVICE CREATE ARTICLE");
-            console.log(model_mess);
-            console.log(typeof model_mess.image_url);
+            // console.log(model_mess);
+            // console.log(typeof model_mess.image_url);
             
             //add ID From localstorage
             model_mess.article_owner_id = Number(localStorage.getItem('id'));
@@ -90,7 +97,7 @@ export class MessageService{
             // return this.http.delete<{message:string}>("http://localhost:3000/api/messages/"+id_message).pipe(
                 tap(cont => {
                     console.log("++++++++++++DEL CONT");
-                    console.log(cont);
+                    // console.log(cont);
                 }),
                 catchError(error => throwError(error.error.message))
             );
@@ -110,7 +117,7 @@ export class MessageService{
             // this.http.post<{message:"string"}>(request_url,JSON.stringify(model_answer),options).pipe(
                 tap(cont => {
                     console.log("IN PIPE TAP FROM ANSWER ARTICLE *messageService*");
-                    console.log(cont);
+                    // console.log(cont);
                 })
                 // con
             )
@@ -135,7 +142,7 @@ export class MessageService{
                    
                     if(cont.length > 0){
                          console.log("MESSAGE LIST ID");
-                        console.log(cont);
+                        // console.log(cont);
                     }
                     
                 })
@@ -175,7 +182,7 @@ export class MessageService{
             return this.http.get<Polling_data[]>(request_url,{observe:'response'}).pipe(
                 tap(cont => {
                     console.log(" ALL POLLING length ");
-                    console.log(cont);
+                    // console.log(cont);
                     // console.log(cont.length);
                     
                     // if(cont.length > 0){

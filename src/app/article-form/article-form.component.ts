@@ -101,7 +101,7 @@ export class ArticleFormComponent implements OnInit {
      console.log(this.message.image_url);
       this.messageService.create_article(this.message).subscribe(response => {
         console.log("+++CREATE MESSAGE RESPONSE");
-        console.log(response);
+        // console.log(response);
         if(response.status == 200){
           window.alert("Votre message a bien été enregistré");
           this.router.navigateByUrl('/articles');
@@ -113,7 +113,7 @@ export class ArticleFormComponent implements OnInit {
       console.log("NO FILE");
       this.messageService.create_article(this.write_form_g.value).subscribe(response => {
         console.log("+++CREATE MESSAGE RESPONSE");
-        console.log(response);
+        // console.log(response);
       });
     }
     

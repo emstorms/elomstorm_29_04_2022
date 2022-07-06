@@ -74,12 +74,12 @@ export class ArticleComponent implements OnInit {
     this.list_answer$ = this.messageService.getArticleById(artId).pipe(
       tap(cont => {
         console.log("SETTING LOCAL STORAGE");
-        console.log(cont);
+        // console.log(cont);
         this.article = {...cont};
         this.articleModel = {...cont};
         console.log("Model and article");
-        console.log(this.article);
-        console.log(this.articleModel);
+        // console.log(this.article);
+        // console.log(this.articleModel);
         //Setting parent ID
         this.parentId = Number(cont.id);
         this.poll_data = new Polling_data();
@@ -91,39 +91,34 @@ export class ArticleComponent implements OnInit {
       concatMap(singleArticle => this.messageService.getAnswersById(artId).pipe(
       // switchMap(singleArticle => this.messageService.getAnswersById(artId).pipe(
         tap(cont2 => {
-          console.log("AFTER SWITCH MAP+++++++");
-          console.log(cont2);
+          console.log("AFTER SWITCH MAP+++++++");    
         }),
       )),
-     
-    
     );
-    // this.article$.subscribe(ee=>{
+  
     this.list_answer$.subscribe(ee=>{
       console.log("SUBSCRIBE+++++++");
     });
-
-
 
             // GETTING POLLLS
     this.observe_all_polls = this.messageService.getPollingById(artId).pipe(
       // switchMap(singleArticle => this.messageService.getAnswersById(artId).pipe(
         tap(cont2 => {
           console.log("AFTER SWITCH MAP+++++++");
-          console.log(cont2.body);
-          console.log(cont2.body?.length);
-          console.log("TYPE OF ")
-          console.log(typeof cont2.body);
+          // console.log(cont2.body);
+          // console.log(cont2.body?.length);
+          // console.log("TYPE OF ")
+          // console.log(typeof cont2.body);
           let arr = JSON.stringify(cont2.body);
-          console.log(arr);
+          // console.log(arr);
           const a2 = JSON.parse(arr);
           console.log(a2.length);
           // console.log(arr.length);
           // console.log(typeof arr);
-          console.log(typeof a2[1]);
+          // console.log(typeof a2[1]);
           for(let i in a2){
             console.log("FETCH AR");
-            console.log(a2[i].id_article);
+            // console.log(a2[i].id_article);
             if(a2[i].is_liked == "-"){
               this.all_dislikes.push(a2[i]);
             }else if(a2[i].is_liked =="+"){
@@ -210,19 +205,6 @@ export class ArticleComponent implements OnInit {
       })
     )
 
-    
-    this.list_answer$.subscribe(res => {
-      tap(_ => {
-        console.log("LLISTE DES REPONSES");
-        console.log(_);
-      })
-    });
-    // console.log("LIST REPONSE +++++++ LENGTH");
-    // console.log(this.list_answer$);
-    
-    }else{
-        console.log(typeof this.articleModel.id);
-    }
    */
 
   }
@@ -289,24 +271,24 @@ export class ArticleComponent implements OnInit {
       this.poll_data.id_user = Number(this.auth.getUserId2());
       this.poll_data.article_id = Number(this.parentId);
       this.poll_data.pseudo = JSON.parse(this.auth.getPseudo());
-      console.log("POLLING DATA");
-      console.log(this.poll_data);
+      // console.log("POLLING DATA");
+      // console.log(this.poll_data);
       if(p_m =='+'){
-        console.log("VOT +");
+        // console.log("VOT +");
         this.poll_data.poll_sign = '+';
-        console.log(this.poll_data);
+        // console.log(this.poll_data);
         this.observe_poll$ = this.messageService.polling(this.poll_data).pipe(
           tap(cont => {
-            console.log("IN TAP POLL +");
-            console.log(cont);
-            console.log(cont.body);
+            // console.log("IN TAP POLL +");
+            // console.log(cont);
+            // console.log(cont.body);
 
             this.poll_returned.id_user = Number(cont.body?.id_user);
             this.poll_returned.id_article = Number(cont.body?.id_article); 
             this.poll_returned.is_liked = JSON.stringify(cont.body?.is_liked);
             
             console.log("AFTHER POLL ASSSIGN");
-            console.log(this.poll_returned.is_liked);
+            // console.log(this.poll_returned.is_liked);
 
             this.my_liked = 1;
             this.my_disliked = 0;
@@ -318,12 +300,12 @@ export class ArticleComponent implements OnInit {
       }else if(p_m =='-'){
         this.poll_data.poll_sign = "-";
         console.log("VOTE -----");
-        console.log(this.poll_data);
+        // console.log(this.poll_data);
         this.observe_poll$ = this.messageService.polling(this.poll_data).pipe(
           tap(cont => {
             console.log("IN TAP POLL");
-            console.log(cont);
-            console.log(cont.body?.id_user);
+            // console.log(cont);
+            // console.log(cont.body?.id_user);
             
             // console.log(cont.body?.id_article);
             // this.poll_returned = {...cont.body};
