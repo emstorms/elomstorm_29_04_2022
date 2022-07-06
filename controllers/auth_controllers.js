@@ -165,7 +165,7 @@ exports.login = (req,res) => {
         if(err){
             console.log(err);
             // throw error;
-            return;
+             throw ("-----TRHOWN ERROR =>Email inexistant => créer un autre email---");
         }
         
           console.log("RESULTAT nb_exists and iscorrect_pass");
@@ -173,7 +173,9 @@ exports.login = (req,res) => {
     
    if(!resultat[0].nb_exists){
     // console.log("Email inexistant => créer un nouveau");
-    throw new Error("-----TRHOWN ERROR =>Email inexistant => créer un autre email---");
+    // throw new Error("-----TRHOWN ERROR =>Email inexistant => créer un autre email---");
+    // throw new Error("-----TRHOWN ERROR =>Email inexistant => créer un autre email---");
+    //  res.status(300).json({message:`----TRHOWN ERROR =>Email inexistant => créer un autre email--- ${err}`}).send(err);
    }
    if(!resultat[0].iscorrect_pass){
     console.log("PASssword");
@@ -198,9 +200,9 @@ exports.login = (req,res) => {
                 
                 console.log(req.body.password);
                 console.log(resultat[0].iscorrect_pass);
-                // throw new Error("Your Password is Incorrect");
+                throw ("Your Password is Incorrect");
                 
-                return res.status(401).json({message:`IMPOSSIBLE DE SE CONNECTER ${err}`}).send(err);
+                // return res.status(401).json({message:`IMPOSSIBLE DE SE CONNECTER ${err}`}).send(err);
             }
                 //
                                      /**********************

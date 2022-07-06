@@ -1,5 +1,6 @@
 // const connection = require('../my_connetion/db_connection');
 const { createPool } = require('mysql');
+const mysql = require('mysql');
 const connection = require('../my_connection/db_connection');
 
 
@@ -27,9 +28,10 @@ INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,img
   VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",@my_var);
 COMMIT;`;
 */
-const request_text =`INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,imgAlt,ownerPseudo)
+const jsondatafile = JSON.stringify(req.body.image_file);
+const request_text =`INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,imgAlt,ownerPseudo,image_file_blob,image_file_json)
 
-VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",(SELECT pseudo FROM user_ WHERE id = ${req.body.article_owner_id}));`;
+VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",(SELECT pseudo FROM user_ WHERE id = ${req.body.article_owner_id}),"${req.body.image_file}",${jsondatafile} );`;
 
 
     console.log(request_text);
@@ -45,12 +47,13 @@ VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owne
         
           console.log("MESSAGE SENT");
           console.log(resultat);
+
     
     })
 
-   
-
     res.status(200).json({message:"NEW ARTICLE CONTROLLER"});
+
+
 }
 
 
@@ -115,18 +118,27 @@ exports.show1Article = (req,res,next) =>{
 }
 
 exports.deleteMessage = (req,res,next) =>{
-    console.log("++++++++++DELETE CONTROLLERS BACKEND+++++");
+    try{
+        console.log("++++++++++DELETE CONTROLLERS BACKEND+++++");
     console.log(req.params);
+
+ 
     request_text = `DELETE FROM article_message WHERE id = ${req.params.id}`;
     // request_text = `SELECT * FROM article_message WHERE id = ${req.params.id}`;
     connection.query(request_text,(err,resultat) => {
         if(err){
             console.log(err);
-            return;
+           throw ("error deleting message");
         }
         // console.log(resultat);
         res.status(200).json({message:"Le message a correctement été supprimé"});
     })
+    }catch(ee) {
+        console.log(ee);
+        res.status(400).json({message:"CAN END REQUEST"}).send({message:"Request not Fullfilled"});
+    }
+    
+  
     
 }
 
