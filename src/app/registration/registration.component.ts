@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl , FormGroup,FormArray, NgForm ,ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { userModel } from 'models/user.model';
 
     //Services
@@ -25,7 +26,7 @@ export class RegistrationComponent implements OnInit {
 
   //Constructor
 
-  constructor(private auth : AuthService) { }
+  constructor(private auth : AuthService, private router: Router) { }
   
 
 
@@ -56,6 +57,14 @@ export class RegistrationComponent implements OnInit {
       .subscribe(member => {
         console.log("°° IN SUBSCRIPTION, show subs cont");
         console.log(member);
+        let mess = JSON.stringify((member));
+        let mess2 = JSON.parse(mess);
+        console.log(mess2.message);
+        if(mess2.message == "User Is saved"){
+          window.alert("Vous êtes bien inscrits, vous pouvez vous connecter");
+          this.router.navigateByUrl('/login');
+        }
+       
 
       });
     

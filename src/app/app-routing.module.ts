@@ -15,12 +15,12 @@ const routes: Routes = [
   {path: 'registrer', component: RegistrationComponent},
   {path: 'login', component: LoginComponent},
   // {path: 'article_form', component: ArticleFormComponent ,canActivate: [AuthGuard]},
-  {path: 'article_form', component: ArticleFormComponent },
+  {path: 'article_form', component: ArticleFormComponent,canActivate: [AuthGuard] },
   {path:'logout_page', component : LogoutPageComponent},
-  {path:'welcome', component : WelcomePageComponent},
+  {path:'welcome', component : WelcomePageComponent,},
   {path: 'member_area', component: MemberAreaComponent},
-  {path: 'articles', component : ListArticleComponent},
-  {path : 'articles/:id', component : ArticleComponent},
+  {path: 'articles', component : ListArticleComponent,canActivate: [AuthGuard]},
+  {path : 'articles/:id', component : ArticleComponent,canActivate: [AuthGuard]},
   //When empty route Or bad input send redirect 
   {path :'',redirectTo:'welcome',pathMatch:'full'},
   // {path :'**',redirectTo:'welcome',pathMatch:'full'}

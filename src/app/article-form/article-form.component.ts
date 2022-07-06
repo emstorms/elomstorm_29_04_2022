@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup ,FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Message } from 'models/article-message.model';
 import { AuthService } from 'services/auth.service';
 import { MessageService } from 'services/message.service';
@@ -28,7 +29,7 @@ export class ArticleFormComponent implements OnInit {
   imagePreview !: any;
   imageBase64: string = '';
 
-  constructor(private auth : AuthService,private messageService :MessageService) { }
+  constructor(private auth : AuthService,private messageService :MessageService, private router: Router) { }
 
 
   //Methods 
@@ -101,6 +102,12 @@ export class ArticleFormComponent implements OnInit {
       this.messageService.create_article(this.message).subscribe(response => {
         console.log("+++CREATE MESSAGE RESPONSE");
         console.log(response);
+        if(response.status == 200){
+          window.alert("Votre message a bien été enregistré");
+          this.router.navigateByUrl('/articles');
+        }else{
+          window.alert("Malheureusement, votre message n'a pu être enregistrer, veuiller réessayer");
+        }
       });
     }else{
       console.log("NO FILE");
