@@ -5,7 +5,7 @@ header{
     flex-wrap: wrap;
 
     .logo{
-        border:1px solid white;
+        // border:1px solid white;
         display:flex;
         justify-content: center;
         align-items: center;
@@ -21,9 +21,11 @@ header{
     .header_nav{
         // background-color: crimson;
         display:flex;
-        // justify-content: center;
+        justify-content: center;
         align-items: center;
         flex-grow: 1;
+        // width:100%;
+        flex-wrap: wrap;
     }
 
     //SET HORIZONTAL MENU items
@@ -57,9 +59,11 @@ header{
             color:white;
             text-decoration: none;
             padding:10px;
+            font-size:1.3rem;
 
             &:hover{
                 background-color:white;
+                color:black;
                 
             }
 

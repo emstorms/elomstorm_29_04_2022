@@ -123,8 +123,8 @@ export class MessageService{
             console.log("ANSwER ARTICLE");
             const request_url = "http://localhost:3000/api/message/new_answer";
             let formD = new FormData();
-            formD.append("model",JSON.stringify(model_answer));
-            formD.append("file",file);
+            // formD.append("model",JSON.stringify(model_answer));
+            // formD.append("file",file);
             model_answer.answer_owner_id = Number(this.auth.getUserId2());
             // this.http.post<{message:"string"}>(request_url,file).pipe(
            return this.http.post<Answer_message>(request_url,model_answer,{observe:"body"}).pipe(

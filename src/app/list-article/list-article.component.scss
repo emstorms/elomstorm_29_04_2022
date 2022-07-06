@@ -10,7 +10,7 @@
     
     &.fetched{
         background-color: transparent;
-        border:2px solid var(--red);
+        // border:2px solid var(--red);
 
       
     }
@@ -21,13 +21,20 @@
     justify-content: space-between;
     align-items: center;
     padding:10px;
-    border: 1px solid black;
+    // border: 1px solid black;
     width: 100%;
+    background-color: whitesmoke;
 
     .title_auth{
         // padding:10px;
         flex-basis: 60%;
         background-color: whitesmoke;
+
+        .title{
+            a{
+                text-decoration: none;
+            }
+        }
     }
 
     .nb_answer{
