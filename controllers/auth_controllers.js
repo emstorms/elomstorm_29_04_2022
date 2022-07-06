@@ -52,7 +52,7 @@ exports.getUsers = (req,res) =>{
                 throw Error("Error sending request");
                 }
                 console.log("RESULTAT ++++++++++++++++++++++");
-                console.log(resultat);
+                // console.log(resultat);
                 //  res.status(200).json({message: "OK We get all Users Info"});
                  res.status(200).json(resultat);
 
@@ -76,7 +76,7 @@ exports.subscription = (req,res) =>{
         for(let k in req.body){
             // console.log(`Key ${k}`);
             console.log("CONTAIN");
-            console.log(req.body[k]);
+            // console.log(req.body[k]);
             // console.log(validator.isEmpty(req.body[k]));
     
             if(validator.isEmpty(req.body[k])){
@@ -84,7 +84,7 @@ exports.subscription = (req,res) =>{
             }
             if(bad_inputs.length > 0 ){
                 console.log("BAD INPU LENGTH");
-                console.log(bad_inputs.length);
+                // console.log(bad_inputs.length);
                 throw Error('La valeur du champ ' + k + ' est invalide ');
             }
             
@@ -154,7 +154,7 @@ exports.login = (req,res) => {
         console.log(log_message.is_valid_log);
         connection.query(request_text,(err,resultat) => {
         if(err){
-            console.log(err);
+            console.log("err");
             // throw error;
              throw ("-----TRHOWN ERROR =>Email inexistant => créer un autre email---");
         }
@@ -170,7 +170,7 @@ exports.login = (req,res) => {
    }
    if(!resultat[0].iscorrect_pass){
     console.log("PASssword");
-    console.log(resultat[0]);
+    // console.log(resultat[0]);
 
    }
 
@@ -190,7 +190,7 @@ exports.login = (req,res) => {
                                             TOKEN
                                     **********************/
             console.log("++++++++BEFORE TOKEN");
-            console.log(resultat[0]);
+            // console.log(resultat[0]);
             res.status(200).json({
                 //   console.log(resultat[0]),
                     userId: resultat[0].user_id,

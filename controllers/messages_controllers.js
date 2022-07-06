@@ -12,10 +12,6 @@ const connection = require('../my_connection/db_connection');
 
 exports.create_new_article = (req,res,next) =>{
     console.log("+++++++IN BACKEND MESSAGE CONTROLLER");
-    // console.log(req.body);
-
-// const request_text =`INSERT INTO article_message (text_title,text_content,article_owner_id,imgUrl,imgAlt,ownerPseudo,image_file_blob,image_file_json)
-// VALUES("${req.body.title}","${req.body.message_content}",${req.body.article_owner_id},"${req.body.image_url}","${req.body.image_alt}",(SELECT pseudo FROM user_ WHERE id = ${req.body.article_owner_id}),"${req.body.image_file}",${jsondatafile} );`;
 const request_text =`INSERT INTO 
 article_message (
                 text_title,
@@ -41,7 +37,7 @@ VALUES(
             console.log("ERRROR");
             // console.log(err);
             // throw error;
-            res.status(403).json({message:`CAN END REQUEST ${err}`}).send(err);
+            res.status(403).json({message:`CAN END REQUEST ${err}`}).send("err");
             return;
         }     
           console.log("MESSAGE SENT");
