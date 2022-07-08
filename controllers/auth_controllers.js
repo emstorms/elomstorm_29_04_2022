@@ -13,7 +13,7 @@ const connection = require("../my_connection/db_connection");
 exports.deleteUser = (req,res,next) =>{
     try{
           console.log("+++++++IN DELETE BACK CONTROLLER");
-          res.status(200).json({message: "OK Going to DELETE the user"});
+        //   res.status(200).json({message: "OK Going to DELETE the user"});
           console.log(req.params.id);
           const query_text = `Delete from user_ where id = ${req.params.id}`;
           connection.query(query_text, (error,resultat,field) =>{
@@ -156,7 +156,7 @@ exports.login = (req,res) => {
         if(err){
             console.log("err");
             // throw error;
-             throw ("-----TRHOWN ERROR =>Email inexistant => créer un autre email---");
+             throw new Error("Error Requesting");
         }
         
         //   console.log("RESULTAT nb_exists and iscorrect_pass");
@@ -164,15 +164,15 @@ exports.login = (req,res) => {
     
    if(!resultat[0].nb_exists){
     // console.log("Email inexistant => créer un nouveau");
-    // throw new Error("-----TRHOWN ERROR =>Email inexistant => créer un autre email---");
+    throw new Error("-----TRHOWN ERROR =>Email inexistant => créer un autre email---");
     // throw new Error("-----TRHOWN ERROR =>Email inexistant => créer un autre email---");
     //  res.status(300).json({message:`----TRHOWN ERROR =>Email inexistant => créer un autre email--- ${err}`}).send(err);
    }
-   if(!resultat[0].iscorrect_pass){
-    console.log("PASssword");
-    // console.log(resultat[0]);
+//    if(!resultat[0].iscorrect_pass){
+//     console.log("PASssword");
+//     // console.log(resultat[0]);
 
-   }
+//    }
 
                                         /**********************
                                             ??????HASHE COMPARE?
@@ -191,6 +191,7 @@ exports.login = (req,res) => {
                                     **********************/
             console.log("++++++++BEFORE TOKEN");
             // console.log(resultat[0]);
+            console.log("USER IS COORECTLY LOGGED SET is_valid_login true");
             res.status(200).json({
                 //   console.log(resultat[0]),
                     userId: resultat[0].user_id,
@@ -208,12 +209,13 @@ exports.login = (req,res) => {
                     )                
                 });         
             })
+            .catch((error => {
+                console.log("Incorrect Password")
+                return res.status(400).json({ error :"Incorrect Password"});
+            }));
                                        
-   console.log("USER IS COORECTLY LOGGED SET is_valid_login true");
 
 })
-
-
     }catch(err){
         console.log("*******ERROR LOGIN************");
         // console.log(err);
