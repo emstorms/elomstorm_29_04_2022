@@ -1,15 +1,31 @@
 
-body{
+.body{
     border:1px solid green;
+    margin:0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // justify-content: center;
+    width: 98%;
+    color:white;
+    a{
+        color:white;
+    }
 }
 
 .account{
     min-height:550px;
     display:flex;
+    min-width: 60%;
+    margin: 10 auto;
+    align-items: center;
+    justify-content: center;
+    
 
 }
 .profil_param{
-    border:1px solid black;
+    // border:1px solid black;
+    background-color: var(--gray);
     min-height:500px;;
     flex-basis: 500px;
     padding:20px;
@@ -17,6 +33,7 @@ body{
     flex-flow:column wrap;
     justify-content: space-around;
     align-items: center;
+    
 }
 
 .profil{
@@ -32,7 +49,7 @@ body{
     }
     .nom{
         margin-top:10px;
-        color:black;
+        color:white;
         text-transform: uppercase;
         font-weight: bold;
         span{
@@ -40,14 +57,16 @@ body{
         }
     }
     .pseudo{
+        margin:10px;
         color:blue;
+        color:var(--beige);
         font-style: italic;
     }
 
 }
 
 .param{
-    border:2px inset coral;
+    // border:2px inset coral;
     padding:10px;
     li{
         list-style:none;
@@ -78,5 +97,8 @@ body{
     }
 }
 button{
-    padding:5px;
+    padding:10px;
+    a{
+        color:black !important;
+    }
 }

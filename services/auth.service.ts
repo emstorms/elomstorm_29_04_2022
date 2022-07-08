@@ -11,6 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { InterfaceMessageService } from 'src/app/interface-message.service';
 import { BehaviorSubject } from 'rxjs';
+import { ConditionalExpr } from '@angular/compiler';
+import { Route, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +40,7 @@ export class AuthService {
 
   isAuth$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient, app_message : InterfaceMessageService) { }
+  constructor(private http: HttpClient, app_message : InterfaceMessageService, private router : Router) { }
 
 
   //methods
@@ -189,7 +191,28 @@ export class AuthService {
         `Backend returned code ${error.status}, body was: `, error.error);
     }
     // Return an observable with a user-facing error message.
-    return throwError(() => new Error('Something bad happened; please try again later.'));
+    return throwError(() => {
+      console.log("-------ERRRIRHANDL2");
+      console.log(error.error);
+      console.log(error.error.error);
+      if(error.error.error == "Incorrect Password"){
+        console.log("Votre mot de passe est incorrect Veuiller retenter");
+        window.alert("Votre mot de passe est incorrect Veuiller retenter");
+      }
+      else{
+        console.log(error.error.originalTarget);
+        let origi = JSON.stringify(error.error.originalTarget);
+        // console.log("ORIGI");
+        // console.log(origi);
+        const ll = JSON.parse(origi);
+        // console.log(ll.__zone_symbol__xhrURL);
+        if(ll.__zone_symbol__xhrURL == "http://localhost:3000/api/auth/login"){
+          window.alert("Email inexistant, veuillez vous inscrire pour vous connecter");
+          
+        }
+      }
+      new Error('Something bad happened; please try again later.');
+    });
   }
 
 

@@ -37,11 +37,6 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.login_form.value).pipe(
       tap(message => {
         console.log("IN PIPE");
-        // console.log(message.is_valid_log);
-        // console.log(typeof message);
-        // console.log(message);
-        // console.log();
-        // const message2 = message;
         console.log(this.auth.getToken());
         console.log("PSEUDO IS");
         console.log(this.auth.getPseudo());
@@ -55,13 +50,13 @@ export class LoginComponent implements OnInit {
       })*/
     ).subscribe(response => {
       console.log("**********RESPONSE");
-      console.log(response);
+     
       console.log(response.status);
       if(response.status ===200){
         this.router.navigateByUrl('/member_area');
-        console.log(JSON.stringify(localStorage));
+  
         localStorage.clear();
-        console.log(JSON.stringify(localStorage));
+
              localStorage.setItem('TOKEN', `${response.body?.token}`);
              localStorage.setItem('id', `${response.body?.userId}`);
              localStorage.setItem('role',`${response.body?.id_role}` )
@@ -72,16 +67,15 @@ export class LoginComponent implements OnInit {
               console.log("+++++TOKEN Present");
               console.log(this.auth.getToken());
               this.auth.setToken(theToken);
-              this.auth.setLogged();
-             
+              this.auth.setLogged();            
               }
               if(theId){
-                console.log("That ID");
-                console.log(theId);
                 this.auth.setId(theId);
               }
       }
+     
     })
+    
   }
 
 }

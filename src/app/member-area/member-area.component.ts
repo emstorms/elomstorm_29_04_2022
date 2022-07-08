@@ -3,6 +3,7 @@ import { AuthService } from 'services/auth.service';
 import { min, Observable,tap } from 'rxjs';
 import { userInfo } from 'models/user.model';
 import { Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { Output } from '@angular/core';
 })
 export class MemberAreaComponent implements OnInit {
 
-  constructor(private auth : AuthService) { }
+  constructor(private auth : AuthService, private router : Router) { }
 
   //App message
   // app_message !:string;
@@ -63,7 +64,7 @@ export class MemberAreaComponent implements OnInit {
       return;
     } 
                   // CONFIRM BEFORE DELETE
-/*
+
 
      const confirmation = prompt(`Tapez "Oui" si Vous souhaitez vraiment supprimer le compte de >${this.myInfo.pseudo}<`);
      const ouir = confirmation?.toLowerCase();
@@ -75,7 +76,7 @@ export class MemberAreaComponent implements OnInit {
      
      window.alert("demande de suppression en cours");
 
-   */
+ 
 
 
      this.auth.deleteUser(token, this.myInfo.id).subscribe(response =>{
@@ -83,6 +84,8 @@ export class MemberAreaComponent implements OnInit {
       console.log(response.status);
       if(response.status == 200){
         this.app_message = "Le compte a bien été Supprimé, vous allez être rediriger A la page d'accueil dans $setTimeout then navigateByUrl";
+        window.alert("Le compte a bien été Supprimé, vous allez être rediriger A la page d'accueil");
+        this.router.navigateByUrl('/logout_page');
       }
      });
 
